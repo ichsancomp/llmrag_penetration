@@ -117,5 +117,5 @@ def print_correct_predictions(correct_results: List[dict]):
         print("Question:", r["question"])
         for i, opt in enumerate(r["choices"]):
             print(f"  {chr(65+i)}. {opt}")
-        print("True Answer:", r["true_answer"], "| 🤖 Predicted:", r["pred_answer"])
+        print("True Answer:", r["true_answer"], "| Predicted:", r["pred_answer"])
         print("-" * 60)

@@ -1,16 +1,17 @@
-from rag_pipeline import Config, RAGClients, RAGChatbot, prepare_dataset, upsert_dataset
+from rag_pipeline2 import Config, RAGClients, RAGChatbot, LLMChatbot, prepare_dataset, upsert_documents, prepare_dataset_evaluation, prepare_dataset_from_web
 from evaluate_utils import evaluate_model,print_sample_results, show_classification_report, save_correct_predictions, print_correct_predictions
+
 
 cfg = Config()
 clients = RAGClients(cfg)
-
+llm = LLMChatbot(clients.mistral, cfg.MODEL_NAME)
 # Prepare documents from OWASP / HackTricks
 #ds = prepare_dataset()
-ds = prepare_dataset()
-
+ds = prepare_dataset_from_web()
+ds_eval = prepare_dataset_evaluation()
 
 # Upsert embeddings to Pinecone
-upsert_dataset(clients.index, clients.mistral, ds, cfg.EMBED_MODEL)
+upsert_documents(clients.index, clients.mistral, ds, cfg.EMBED_MODEL)
 
 # Create RAG chatbot
 bot = RAGChatbot(clients.mistral, clients.index, cfg.MODEL_NAME, cfg.EMBED_MODEL)
@@ -24,7 +25,8 @@ bot = RAGChatbot(clients.mistral, clients.index, cfg.MODEL_NAME, cfg.EMBED_MODEL
 
 # Evaluate performance (dummy since no ground-truth)
 
-# Ask chatbot a question
+# Ask chatbot a question with RAG
+
 
 question = "What is privilege escalation?"
 print("Bot Answer:", bot.ask(question))
@@ -36,20 +38,23 @@ while True:
         reply = bot.ask(user_input)
         print("Bot:", reply)
 
+
+
 """
 print("Running evaluation on preemware/pentesting-eval")
-accuracy, results = evaluate_model(ds, clients.mistral)
+eval_ds = prepare_dataset_evaluation()
+accuracy, results = evaluate_model(eval_ds, clients.mistral)
 
-print(f"\nEvaluation Accuracy: {accuracy*100:.2f}%")
+print(f"\n Evaluation Accuracy: {accuracy*100:.2f}%")
 
 # Optional: print some results
 for r in results[:10]:
     print("Q:", r["question"])
     print("A:", r["choices"])
-    print("True:", r["true_answer"], "| Pred:", r["pred_answer"], "" if r["correct"] else "")
+    print("True:", r["true_answer"], "| Pred:", r["pred_answer"], "| ✅" if r["correct"] else "| ❌")
     print("-" * 50)
 
-accuracy, results = evaluate_model(ds, clients.mistral)
+accuracy, results = evaluate_model(ds_eval, clients.mistral)
 print(f"\nAccuracy: {accuracy * 100:.2f}%")
 
 # Reporting

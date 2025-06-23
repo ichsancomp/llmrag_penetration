@@ -22,7 +22,7 @@ This project is a Retrieval-Augmented Generation (RAG) pipeline for penetration 
 ```bash
 git clone https://github.com/ichsancomp/llmrag_penetration.git
 cd llmrag_penetration
-bash```
+```
 
 2. **Install dependencies**
 pip install -r requirements.txt

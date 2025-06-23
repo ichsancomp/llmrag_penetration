@@ -1,6 +1,6 @@
 from rag_pipeline2 import LLMChatbot
 from mistralai.client import MistralClient
-mistral = MistralClient(api_key="YnhQ7lYiFLCfKo1HvbZaHvsCHO6yXVig")
+mistral = MistralClient(api_key="MISTRAL_API_KEY")
 bot_llm = LLMChatbot(model_name="mistral-large-latest", mistral=mistral)
 
 while True:

@@ -25,6 +25,7 @@ cd llmrag_penetration
 ```
 
 2. **Install dependencies**
+   Python 3.10.12
 ```bash
 pip install -r requirements.txt
 ```

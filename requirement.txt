@@ -1,0 +1,19 @@
+# Core AI Clients
+mistralai==0.1.7          # Official Mistral Python SDK
+pinecone-client==3.0.2    # Pinecone vector database client
+
+# LangChain utilities for document processing
+langchain==0.1.17
+langchain-community==0.0.36
+langchain-core==0.1.44
+
+# Text splitting & document handling
+beautifulsoup4==4.12.2    # For HTML parsing
+requests==2.31.0          # For fetching web pages
+
+# Dataset handling
+datasets==2.18.0          # Hugging Face datasets
+
+# Other useful libraries
+tqdm==4.66.4              # Optional: for progress bars
+python-dotenv==1.0.1      # Optional: load .env API keys easily
